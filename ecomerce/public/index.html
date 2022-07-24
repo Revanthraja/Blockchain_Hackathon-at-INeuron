@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title> Ecomerce website</title>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="node_modules/web3/dist/web3.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    </head>
+    <body>
+        <div class="login-page">
+            <div class="form">
+                <form class="register-form">
+                    <h2> Create your account here</h2>
+                    <input type="text" placeholder="name"/>
+                    <input type="text" placeholder="email id"/>
+                    <input type="text" placeholder="password"/>
+                    <input type="text" placeholder="conform password"/>
+                   <button> <a href="index2.html">
+                        create
+                    
+                        </a></button>
+                        
+                    
+                    <p class="message">Already Registerd?<a href="#"> login</a> </p>
+                </form>
+                <form class="login-form">
+                    <input type="text" placeholder="name"/>
+                    <input type="password" placeholder="password"/>
+                    <button> <a href="index2.html">login</a></button>
+                    <p class="message">Not Registerd?<a href="#"> Register here</a></p>
+
+                </form>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+        </script>
+        <script>
+            $('.message a').click(function(){
+                $('form').animate({height:"toggle",opacity:"toggle"},"slow");
+            })
+            if(typeof web3!=="undefined"){
+            web3=new Web3(ethereum);
+            console.log(web3.eth.accounts);
+        }else{
+            web3=new Web3(new Web3.providers.HttpProvider("https:/localhost:8545"));
+        }
+
+        var address='';
+        var minter_address='';
+        var contract=new web3.eth.Contract(address);
+console.log(contract);
+
+async function claim(amount){
+    const accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+    const account= accounts[0];
+    const tx=await contract.methods.transferFrom(minter_address,account,amount).send({from:account});
+
+} 
+const form=document.getElementById("create");
+form.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    console.log(form.input.value);
+    claim(form.input.value);
+})
+
+
+
+
+        </script>
+    </body>
+</html>
